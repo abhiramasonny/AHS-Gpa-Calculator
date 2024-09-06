@@ -15,8 +15,9 @@
             align-items: center;
             height: 100vh;
             color: #333;
+            flex-direction: column; /* This ensures that GPA is displayed below */
         }
-    
+
         .container {
             max-width: 400px;
             background-color: #fff;
@@ -25,50 +26,50 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
-    
+
         h1 {
             margin-bottom: 20px;
             font-family: 'Montserrat', sans-serif;
             color: #333;
         }
-    
+
         .form-group {
-            margin-bottom: 25px;
-            padding: 10px;
+            margin-bottom: 25px; /* Increased space between form groups */
+            padding: 10px; /* Added padding inside the form groups */
             transition: transform 0.3s ease;
         }
-    
+
         input, select {
             width: 100%;
-            padding: 15px; 
+            padding: 15px; /* Increased padding inside inputs and selects */
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
             transition: border-color 0.3s ease;
         }
-    
+
         input:focus, select:focus {
             border-color: #6e45e2;
             outline: none;
         }
-    
+
         .scrollable-inputs {
-            max-height: 300px;
+            max-height: 300px; /* Limiting height to make it scrollable */
             overflow-y: auto;
             margin-bottom: 20px;
             padding-right: 10px;
         }
-    
+
         .scrollable-inputs::-webkit-scrollbar {
             width: 8px;
         }
-    
+
         .scrollable-inputs::-webkit-scrollbar-thumb {
             background: #6e45e2;
             border-radius: 10px;
         }
-    
+
         button {
             width: 100%;
             padding: 14px;
@@ -81,38 +82,45 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             margin-top: 10px;
         }
-    
+
         button:hover {
             background-color: #5a39b2;
             transform: scale(1.05);
         }
-    
+
         .result {
             margin-top: 20px;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 2.5em;
             color: #333;
+            font-weight: bold;
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
         }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
-    
 </head>
 <body>
+
     <div class="container">
         <h1>GPA Calculator</h1>
         <div class="form-group">
             <label for="numClasses">Number of Classes:</label>
-            <input type="number" id="numClasses" min="1" placeholder="Enter number of classes">
+            <input type="number" id="numClasses" min="1" placeholder="Enter number of classes" required>
         </div>
         <button onclick="generateClassFields()">Add Classes</button>
 
         <div class="scrollable-inputs" id="classInputs"></div>
 
         <button onclick="calculateGPA()">Calculate GPA</button>
-
-        <div class="result" id="gpaResult"></div>
     </div>
+
+    <!-- GPA Result Section (Moved outside the container) -->
+    <div class="result" id="gpaResult">Your GPA will appear here</div>
 
     <script>
         function generateClassFields() {
@@ -158,8 +166,10 @@
             }
 
             const finalGPA = totalGPA / numClasses;
-            document.getElementById('gpaResult').textContent = `Your GPA is: ${finalGPA.toFixed(2)}`;
+            const gpaResult = document.getElementById('gpaResult');
+            gpaResult.textContent = `Your GPA is: ${finalGPA.toFixed(2)}`;
         }
     </script>
+
 </body>
 </html>
