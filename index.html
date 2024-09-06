@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+    
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+    
+        h1 {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+    
+        .form-group {
+            margin-bottom: 25px;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+    
+        input, select {
+            width: 100%;
+            padding: 15px; 
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+    
+        input:focus, select:focus {
+            border-color: #6e45e2;
+            outline: none;
+        }
+    
+        .scrollable-inputs {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+    
+        .scrollable-inputs::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        .scrollable-inputs::-webkit-scrollbar-thumb {
+            background: #6e45e2;
+            border-radius: 10px;
+        }
+    
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #6e45e2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+    
+        button:hover {
+            background-color: #5a39b2;
+            transform: scale(1.05);
+        }
+    
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            color: #333;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>GPA Calculator</h1>
+        <div class="form-group">
+            <label for="numClasses">Number of Classes:</label>
+            <input type="number" id="numClasses" min="1" placeholder="Enter number of classes">
+        </div>
+        <button onclick="generateClassFields()">Add Classes</button>
+
+        <div class="scrollable-inputs" id="classInputs"></div>
+
+        <button onclick="calculateGPA()">Calculate GPA</button>
+
+        <div class="result" id="gpaResult"></div>
+    </div>
+
+    <script>
+        function generateClassFields() {
+            const numClasses = document.getElementById('numClasses').value;
+            const classInputs = document.getElementById('classInputs');
+            classInputs.innerHTML = ''; // Clear previous fields
+
+            for (let i = 0; i < numClasses; i++) {
+                classInputs.innerHTML += `
+                    <div class="form-group">
+                        <label for="grade${i}">Class ${i + 1} Grade:</label>
+                        <input type="number" id="grade${i}" min="0" max="100" placeholder="Enter grade for class ${i + 1}">
+                        <label for="type${i}">Class ${i + 1} Type:</label>
+                        <select id="type${i}">
+                            <option value="OL">OL</option>
+                            <option value="ADV">ADV</option>
+                            <option value="AP">AP</option>
+                        </select>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateGPA() {
+            const numClasses = document.getElementById('numClasses').value;
+            let totalGPA = 0;
+
+            for (let i = 0; i < numClasses; i++) {
+                const grade = document.getElementById(`grade${i}`).value;
+                const type = document.getElementById(`type${i}`).value;
+
+                let baseGPA;
+                if (type === "OL") {
+                    baseGPA = 4.0;
+                } else if (type === "ADV") {
+                    baseGPA = 4.5;
+                } else if (type === "AP") {
+                    baseGPA = 5.0;
+                }
+
+                const gpaForClass = baseGPA - (100 - grade) * 0.05;
+                totalGPA += gpaForClass;
+            }
+
+            const finalGPA = totalGPA / numClasses;
+            document.getElementById('gpaResult').textContent = `Your GPA is: ${finalGPA.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
