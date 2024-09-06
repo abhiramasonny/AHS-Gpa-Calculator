@@ -34,14 +34,14 @@
         }
 
         .form-group {
-            margin-bottom: 25px; /* Increased space between form groups */
-            padding: 10px; /* Added padding inside the form groups */
+            margin-bottom: 25px;
+            padding: 10px;
             transition: transform 0.3s ease;
         }
 
         input, select {
             width: 100%;
-            padding: 15px; /* Increased padding inside inputs and selects */
+            padding: 15px; 
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -55,7 +55,7 @@
         }
 
         .scrollable-inputs {
-            max-height: 300px; /* Limiting height to make it scrollable */
+            max-height: 300px;
             overflow-y: auto;
             margin-bottom: 20px;
             padding-right: 10px;
@@ -119,14 +119,13 @@
         <button onclick="calculateGPA()">Calculate GPA</button>
     </div>
 
-    <!-- GPA Result Section (Moved outside the container) -->
     <div class="result" id="gpaResult">Your GPA will appear here</div>
 
     <script>
         function generateClassFields() {
             const numClasses = document.getElementById('numClasses').value;
             const classInputs = document.getElementById('classInputs');
-            classInputs.innerHTML = ''; // Clear previous fields
+            classInputs.innerHTML = '';
 
             for (let i = 0; i < numClasses; i++) {
                 classInputs.innerHTML += `
